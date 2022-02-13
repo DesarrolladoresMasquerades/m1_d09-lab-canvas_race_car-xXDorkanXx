@@ -8,17 +8,6 @@ const obstacle = new Obstacle(ctx);
 
 const game = new Game(ctx, player, obstacle);
 
-// const car = {
-//   img: new Image(),
-//   x: 127,
-//   y: 371,
-//   width: 28,
-//   height: 59,
-//   vx: 5,
-//   vy: 5
-// } 
-// car.img.src = "images/car.png";
-
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();
@@ -28,8 +17,6 @@ window.onload = () => {
     game.start();
   }
 };
-
-
 
 document.addEventListener(
   "keydown",

@@ -37,23 +37,6 @@ class Game{
         if(this.frames !== null){
             this.frames = requestAnimationFrame(this.play.bind(this));
         }
-        /*
-        setInterval(() => {
-            this.clear();
-            this.drawBackground();
-            this.drawMainCharacters();
-
-            this.car.move();
-            for (let i = 0; i < this.obstacles.length; i++) {
-                this.obstacles[i].move();
-                this.obstacles[i].draw();
-                this.car.crashCollision(this.obstacles[i]);
-                if (this.obstacles[i].y > 800) {
-                    this.obstacles.splice(i, 1);
-                }
-            }
-        }, 1000 / 60);
-        */
     }
 
     stop(){
@@ -77,11 +60,22 @@ class Game{
             this.obstacle.obstacles[i].move();
             this.obstacle.obstacles[i].draw();
             this.crashCollision(this.obstacle.obstacles[i]);
-            if (this.obstacle.obstacles[i].y > 800) {
+            if (this.obstacle.obstacles[i].y > this.ctx.canvas.height) {
                 this.obstacle.obstacles.splice(i, 1);
+                this.score++;
             }
         }
-        //this.drawScore();
+        this.drawScore();
+    }
+
+    drawScore(){
+        this.ctx.save();
+        this.ctx.fillStyle = "white";
+        this.ctx.font = "normal 26px pixelFont";
+        this.ctx.fillText(`Score: ${this.score} pts`, 20, 37);
+        this.ctx.strokeStyle = "black";
+        this.ctx.strokeText(`Score: ${this.score} pts`, 20, 37);
+        this.ctx.restore();
     }
 
     crashCollision(ele) {
@@ -95,14 +89,15 @@ class Game{
         const topEle = ele.y;
         const botEle = ele.y + ele.height;
 
+        
         if ((leftP < leftEle &&  rightP > leftEle && topP < botEle && botP > topEle) ||
-            (rightP > rightEle &&  leftP < rightEle && topP < botEle && botP > topEle) ||
-            (topP > topEle && topP < botEle && rightP > leftEle && leftP < leftEle) ||
-            (topP > topEle && topP < botEle && leftP < rightEle && rightP > rightEle) ||
-            (topP > topEle && topP < botEle && leftP > leftEle && rightP < rightEle)){
-          setTimeout(() => alert('crash'), 5);
-          this.stop();
-          window.location.reload();
+        (rightP > rightEle &&  leftP < rightEle && topP < botEle && botP > topEle) ||
+        (topP > topEle && topP < botEle && rightP > leftEle && leftP < leftEle) ||
+        (topP > topEle && topP < botEle && leftP < rightEle && rightP > rightEle) ||
+        (topP > topEle && topP < botEle && leftP > leftEle && rightP < rightEle)){
+            setTimeout(() => alert(`GAME OVER, you crashed!!! Your score is: ${this.score}. Try again!`), 5);
+            this.stop();
+            window.location.reload();
         }
     }
 }

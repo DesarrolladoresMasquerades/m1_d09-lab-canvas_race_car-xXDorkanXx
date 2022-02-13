@@ -1,7 +1,7 @@
 class Obstacle{
     constructor(ctx){
         this.ctx = ctx;
-        this.x = Math.floor(Math.random() * 280 + 30);
+        this.x = Math.floor(Math.random() * (this.ctx.canvas.width - 91) + 30);
         this.y = 5;
         this.width = 31;
         this.height = 59;
@@ -21,7 +21,7 @@ class Obstacle{
 
         setTimeout(() => {
             this.createObstacles();
-        }, 3000);
+        }, 2000);
     }
     
     move() {
