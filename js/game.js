@@ -17,10 +17,10 @@ class Game{
 
     start(){
         this.init();
+        this.obstacle.createObstacles();
         this.play();
-        this.obstale.createObstacles();
     }
-
+    
     init(){
         if(this.frames) this.stop();
         this.frames = 0;
@@ -30,10 +30,10 @@ class Game{
         this.player.init();
         this.obstacle.init();
     }
-
+    
     play(){
-        this.move();
         this.draw();
+        
         if(this.frames !== null){
             this.frames = requestAnimationFrame(this.play.bind(this));
         }
@@ -56,6 +56,11 @@ class Game{
         */
     }
 
+    stop(){
+        cancelAnimationFrame(this.frames);
+        this.frames = null;
+    }
+
     draw(){
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
         this.ctx.drawImage(
@@ -65,8 +70,27 @@ class Game{
             this.width,
             this.height
         );
+
         this.player.draw();
-        this.obstacle.draw();
-        this.drawScore();
+
+        for (let i = 0; i < this.obstacle.obstacles.length; i++) {
+            this.obstacle.obstacles[i].move();
+            this.obstacle.obstacles[i].draw();
+            this.crashCollision(this.obstacle.obstacles[i]);
+            if (this.obstacle.obstacles[i].y > 800) {
+                this.obstacle.obstacles.splice(i, 1);
+            }
+        }
+        //this.drawScore();
+    }
+
+    crashCollision(ele) {
+        if (
+          (this.player.y < ele.y + ele.height && this.player.x < ele.x + ele.width && this.player.x + this.player.width > ele.x) ||
+          (ele.y + ele.height > this.player.y && ele.x < this.player.x + this.player.width && this.player.x < ele.x + ele.width)) {
+          setTimeout(() => alert('crash'), 5);
+          this.stop();
+          window.location.reload();
+        }
     }
 }

@@ -2,9 +2,9 @@ class Obstacle{
     constructor(ctx){
         this.ctx = ctx;
         this.x = Math.floor(Math.random() * 280 + 30);
-        this.y = 150;
-        this.width = 28;
-        this.height = 59;
+        this.y = 5;
+        this.width = 60;
+        this.height = 50;
         this.img = new Image();
         this.img.src = "/images/red-car.png"
         this.obstacles = [];
@@ -16,7 +16,7 @@ class Obstacle{
 
     createObstacles() {
         if (Math.floor(Math.random() * 25) % 2 === 0) {
-            this.obstacles.push(new Obstacle(this));
+            this.obstacles.push(new Obstacle(this.ctx));
         }
 
         setTimeout(() => {
@@ -37,6 +37,6 @@ class Obstacle{
             this.y,
             this.width,
             this.height
-        )
+        );
     }
 }
