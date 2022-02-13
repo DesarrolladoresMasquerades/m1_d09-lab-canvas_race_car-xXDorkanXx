@@ -3,8 +3,8 @@ class Obstacle{
         this.ctx = ctx;
         this.x = Math.floor(Math.random() * 280 + 30);
         this.y = 5;
-        this.width = 60;
-        this.height = 50;
+        this.width = 31;
+        this.height = 59;
         this.img = new Image();
         this.img.src = "/images/red-car.png"
         this.obstacles = [];

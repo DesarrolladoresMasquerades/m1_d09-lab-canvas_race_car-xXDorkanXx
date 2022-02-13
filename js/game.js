@@ -85,9 +85,21 @@ class Game{
     }
 
     crashCollision(ele) {
-        if (
-          (this.player.y < ele.y + ele.height && this.player.x < ele.x + ele.width && this.player.x + this.player.width > ele.x) ||
-          (ele.y + ele.height > this.player.y && ele.x < this.player.x + this.player.width && this.player.x < ele.x + ele.width)) {
+        const leftP = this.player.x;
+        const rightP = this.player.x + this.player.width;
+        const topP = this.player.y;
+        const botP = this.player.y + this.player.height;
+
+        const leftEle = ele.x;
+        const rightEle = ele.x + ele.width;
+        const topEle = ele.y;
+        const botEle = ele.y + ele.height;
+
+        if ((leftP < leftEle &&  rightP > leftEle && topP < botEle && botP > topEle) ||
+            (rightP > rightEle &&  leftP < rightEle && topP < botEle && botP > topEle) ||
+            (topP > topEle && topP < botEle && rightP > leftEle && leftP < leftEle) ||
+            (topP > topEle && topP < botEle && leftP < rightEle && rightP > rightEle) ||
+            (topP > topEle && topP < botEle && leftP > leftEle && rightP < rightEle)){
           setTimeout(() => alert('crash'), 5);
           this.stop();
           window.location.reload();
